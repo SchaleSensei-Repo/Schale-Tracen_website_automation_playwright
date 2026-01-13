@@ -30,4 +30,26 @@ test.describe('Home smoke', () => {
     await home.navGames.click();
     await expect(page).toHaveURL(/\/games\/$/);
   });
+
+  test('search FMHY filters results correctly', async ({ page }) => {
+    // Go to home page
+    await page.goto('/');
+
+    // Locate the search input
+    const searchInput = page.locator('#siteSearch');
+
+    // Type "FMHY"
+    await searchInput.fill('FMHY');
+
+    // Assertion 1: FMHY must be visible
+    const fmhyItem = page.getByText('FMHY', { exact: false });
+    await expect(fmhyItem).toBeVisible();
+
+    // Assertion 2: Wotaku must NOT be visible
+    const wotakuItem = page.getByText('Wotaku', { exact: false });
+    await expect(wotakuItem).toBeHidden();
+
+    // Console success message
+    console.log('The Search function is working');
+  });
 });
