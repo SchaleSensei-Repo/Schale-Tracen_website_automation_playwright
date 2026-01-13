@@ -52,4 +52,26 @@ test.describe('Home smoke', () => {
     // Console success message
     console.log('The Search function is working');
   });
+
+  test('weather dropdown updates wttr.in module to Sagami-Ono', async ({ page }) => {
+    // Open main menu
+    await page.goto('/');
+
+    // Locate dropdown and iframe
+    const locationDropdown = page.locator('#wttrLocation');
+    const weatherFrame = page.locator('#wttrFrame');
+
+    // Change location to Sagami-ono
+    await locationDropdown.selectOption({ label: 'Sagami-Ono' });
+
+    // Get iframe src
+    const frameSrc = await weatherFrame.getAttribute('src');
+
+    // Assertion: iframe src must contain "Sagami-ono"
+    expect(frameSrc).toBeTruthy();
+    expect(frameSrc!).toContain('Sagami-Ono');
+
+    // Success log
+    console.log('The Weather wttr.in module is working');
+  });
 });
