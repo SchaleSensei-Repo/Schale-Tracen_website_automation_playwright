@@ -1,5 +1,9 @@
 # Schale-Tracen Website Automation Testing
 
+[![Playwright Tests](https://github.com/SchaleSensei-Repo/Schale-Tracen_website_automation_playwright/actions/workflows/playwright.yml/badge.svg)](https://github.com/SchaleSensei-Repo/Schale-Tracen_website_automation_playwright/actions/workflows/playwright.yml)
+[![License](https://img.shields.io/github/license/SchaleSensei-Repo/Schale-Tracen_website_automation_playwright)](https://github.com/SchaleSensei-Repo/Schale-Tracen_website_automation_playwright/blob/main/LICENSE)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](https://nodejs.org/)
+
 A comprehensive Playwright test suite for smoke testing the Schale-Tracen website (https://schale-tracen.my.id). This project focuses on automated testing of key website functionalities to ensure reliability and proper operation.
 
 ## Features Tested
@@ -91,6 +95,9 @@ npm run report
 ## Project Structure
 
 ```
+├── .github/
+│   └── workflows/
+│       └── playwright.yml    # GitHub Actions CI/CD workflow
 ├── tests/
 │   └── smoke/                 # Smoke test specifications
 │       ├── games.spec.ts      # Games page tests
@@ -119,6 +126,23 @@ The project uses Playwright's configuration file (`playwright.config.ts`) with t
 - **Tracing**: Enabled on first retry
 - **Screenshots**: Taken only on failures
 - **Videos**: Retained on failures
+
+## CI/CD
+
+This project uses GitHub Actions for continuous integration. The workflow automatically runs the test suite on every push and pull request.
+
+### Workflow Configuration
+
+The GitHub Actions workflow (`.github/workflows/playwright.yml`) includes the following steps:
+
+1. **Checkout Code**: Uses `actions/checkout@v4` to clone the repository
+2. **Setup Node.js**: Uses `actions/setup-node@v4` with Node.js version 20
+3. **Install Dependencies**: Runs `npm ci` for clean installation
+4. **Install Playwright Browsers**: Runs `npx playwright install --with-deps` to install browsers and system dependencies
+5. **Run Tests**: Executes `npm test` with `BASE_URL=https://schale-tracen.my.id`
+6. **Upload Report on Failure**: If tests fail, uploads the Playwright report as an artifact using `actions/upload-artifact@v4`
+
+The workflow has a 15-minute timeout and runs on `ubuntu-latest`.
 
 ## Test Structure
 
