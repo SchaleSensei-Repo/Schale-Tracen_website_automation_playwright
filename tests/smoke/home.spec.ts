@@ -74,4 +74,21 @@ test.describe('Home smoke', () => {
     // Success log
     console.log('The Weather wttr.in module is working');
   });
+
+  test('FreshRSS login page is reachable from main menu (no 4xx/5xx)', async ({ page }) => {
+    await page.goto('/');
+
+    const [response] = await Promise.all([
+      page.waitForResponse(
+        (r) => r.request().isNavigationRequest() && r.url().includes('/freshrss/'),
+        { timeout: 30_000 }
+      ),
+      page.getByRole('link', { name: /^News$/ }).click(),
+    ]);
+
+    expect(response.status()).toBeLessThan(400);
+    await expect(page.getByText(/FreshRSS/i)).toBeVisible();
+
+    console.log('The FreshRSS module is working');
+  });
 });
