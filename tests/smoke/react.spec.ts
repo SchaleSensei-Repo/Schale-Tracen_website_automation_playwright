@@ -1,5 +1,11 @@
 import { test, expect } from '@playwright/test';
 
+test.beforeEach(async ({ page }) => {
+  // Block wttr.in iframe loads to avoid random slowdowns/timeouts
+  await page.route('**://wttr.in/**', route => route.abort());
+  await page.route('**/wttr.in/**', route => route.abort());
+});
+
 test('random React game loads and runs', async ({ page }) => {
   const pageErrors: string[] = [];
   page.on('pageerror', (err) => pageErrors.push(String(err)));

@@ -1,6 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { GamesPage } from '../../pages/GamesPage';
 
+test.beforeEach(async ({ page }) => {
+  // Block wttr.in iframe loads to avoid random slowdowns/timeouts
+  await page.route('**://wttr.in/**', route => route.abort());
+  await page.route('**/wttr.in/**', route => route.abort());
+});
+
 test.describe('Games smoke', () => {
   test('games list loads', async ({ page }) => {
     const games = new GamesPage(page);

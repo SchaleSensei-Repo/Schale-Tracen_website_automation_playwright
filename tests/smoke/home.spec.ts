@@ -1,6 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../../pages/HomePage';
 
+test.beforeEach(async ({ page }) => {
+  // Block wttr.in iframe loads to avoid random slowdowns/timeouts
+  await page.route('**://wttr.in/**', route => route.abort());
+  await page.route('**/wttr.in/**', route => route.abort());
+});
+
 test.describe('Home smoke', () => {
   test('home loads and shows content', async ({ page }) => {
     const home = new HomePage(page);
@@ -54,26 +60,34 @@ test.describe('Home smoke', () => {
   });
 
   test('weather dropdown updates wttr.in module to Sagami-Ono', async ({ page }) => {
-    // Open main menu
-    await page.goto('/');
+  // Open main menu
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-    // Locate dropdown and iframe
-    const locationDropdown = page.locator('#wttrLocation');
-    const weatherFrame = page.locator('#wttrFrame');
+  // Locate dropdown and iframe
+  const locationDropdown = page.locator('#wttrLocation');
+  const weatherFrame = page.locator('#wttrFrame');
 
-    // Change location to Sagami-ono
-    await locationDropdown.selectOption({ label: 'Sagami-Ono' });
+  // Change location to Sagami-Ono
+  await locationDropdown.selectOption({ label: 'Sagami-Ono' });
 
-    // Get iframe src
-    const frameSrc = await weatherFrame.getAttribute('src');
+  // Read currently selected option text
+  const selectedLocation = await locationDropdown
+    .locator('option:checked')
+    .textContent();
 
-    // Assertion: iframe src must contain "Sagami-ono"
-    expect(frameSrc).toBeTruthy();
-    expect(frameSrc!).toContain('Sagami-Ono');
+  // Get iframe src
+  const frameSrc = await weatherFrame.getAttribute('src');
 
-    // Success log
-    console.log('The Weather wttr.in module is working');
-  });
+  // Assertions
+  expect(frameSrc).toBeTruthy();
+  expect(frameSrc!).toContain('Sagami-Ono');
+
+  // Success log with dynamic dropdown value
+  console.log(
+    `The Weather wttr.in module is working. The dropdown location is ${selectedLocation?.trim()}`
+  );
+});
+
 
   test('FreshRSS login page is reachable from main menu (no 4xx/5xx)', async ({ page }) => {
     await page.goto('/');
