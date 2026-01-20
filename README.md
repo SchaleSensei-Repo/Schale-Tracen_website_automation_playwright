@@ -8,7 +8,7 @@ A comprehensive Playwright test suite for smoke testing the Schale-Tracen websit
 
 ## Video Evidence
 
-[View the Playwright Automation Testing in action](https://drive.google.com/file/d/1WOFdcdodEiONmrgAFf9UKC-kBNGkG40e/view?usp=sharing)
+[View the Playwright Automation Testing in action](https://youtu.be/aZGGMJUaBQw)
 
 ## Features Tested
 
