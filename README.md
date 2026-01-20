@@ -6,6 +6,10 @@
 
 A comprehensive Playwright test suite for smoke testing the Schale-Tracen website (https://schale-tracen.my.id). This project focuses on automated testing of key website functionalities to ensure reliability and proper operation.
 
+## Video Evidence
+
+[View the Playwright Automation Testing in action](https://drive.google.com/file/d/1WOFdcdodEiONmrgAFf9UKC-kBNGkG40e/view?usp=sharing)
+
 ## Features Tested
 
 The test suite covers the following main areas:
