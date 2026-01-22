@@ -35,6 +35,12 @@ The test suite covers the following main areas:
 - **Content Rendering**: Validates that games render meaningful content and are interactive
 - **Error Handling**: Ensures no uncaught runtime errors occur during game loading
 
+### Tools Page Tests
+- **Money Conversion Tool**: Tests loading, running, and calculation correctness of the currency conversion tool with random currency pairs
+- **Currency Swap**: Validates that swapping From/To currencies updates the UI lines accordingly
+- **Gold Calculator**: Tests calculation accuracy for random weight inputs in default Weight → Value mode using spot prices and FX rates
+- **Random React Tools**: Tests loading and running of random React-based tools from the tools list
+
 ## Prerequisites
 
 - Node.js 18 or higher
@@ -107,10 +113,16 @@ npm run report
 │       ├── games.spec.ts      # Games page tests
 │       ├── home.spec.ts       # Home page tests
 │       ├── pico8.spec.ts      # Pico-8 games tests
-│       └── react.spec.ts      # React games tests
+│       ├── react.spec.ts      # React games tests
+│       ├── tools-fx.spec.ts   # Money conversion tool tests
+│       ├── tools-fx-swap.spec.ts  # Currency swap tests
+│       ├── tools-gold.spec.ts # Gold calculator tests
+│       └── tools-react.spec.ts # React tools tests
 ├── pages/                     # Page Object Model classes
 │   ├── GamesPage.ts          # Games page interactions
 │   └── HomePage.ts           # Home page interactions
+├── utils/                     # Utility functions
+│   └── tools.ts               # Playwright test utilities (parsing, assertions, etc.)
 ├── playwright.config.ts      # Playwright configuration
 ├── package.json              # Project dependencies and scripts
 ├── .env.example              # Environment variables template
@@ -154,6 +166,7 @@ The tests follow the Page Object Model pattern for better maintainability:
 
 - **HomePage.ts**: Encapsulates home page elements and actions (navigation, search, weather selection)
 - **GamesPage.ts**: Handles games page interactions (loading, game list access)
+- **utils/tools.ts**: Provides utility functions for Playwright tests including number parsing, random option selection, and approximate value assertions
 
 All tests are located in the `tests/smoke/` directory and use descriptive naming conventions.
 
