@@ -9,7 +9,7 @@ export class HomePage {
 
   constructor(page: Page) {
     this.page = page;
-    this.navGames = page.getByRole('link', { name: 'Games' });
+    this.navGames = page.locator('nav').getByRole('link', { name: 'Games', exact: true });
     this.siteSearch = page.locator('#siteSearch');
     this.wttrLocation = page.locator('#wttrLocation');
     this.wttrFrame = page.locator('#wttrFrame');

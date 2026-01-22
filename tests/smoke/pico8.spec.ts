@@ -11,10 +11,10 @@ test('random Pico-8 game loads and runs', async ({ page }) => {
   page.on('pageerror', (err) => pageErrors.push(String(err)));
 
   // 1) Start at main menu
-  await page.goto('/');
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   // 2) Go to Games
-  await page.getByRole('link', { name: /^Games$/ }).click();
+  await page.locator('nav').getByRole('link', { name: 'Games', exact: true }).click();
   await page.waitForURL(/\/games\/$/, { waitUntil: 'domcontentloaded' });
 
   // 3) Wait for the list to populate
